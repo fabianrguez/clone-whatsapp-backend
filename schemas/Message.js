@@ -1,10 +1,10 @@
-import { model, Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const whatsappSchema = new Schema({
   message: String,
   name: String,
   timestamp: String,
-  received: Boolean,
+  room: String,
 });
 
-export default model('messageContent', whatsappSchema);
+export default model('messagecontents', whatsappSchema);

@@ -9,11 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "mongoose": "^5.10.10"
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.10",
+    "netlify-lambda": "^2.0.1",
+    "pusher": "^4.0.0",
+    "serverless-http": "^2.6.0"
   },
-  "devDependencies" : {
+  "devDependencies": {
     "nodemon": "^2.0.6"
   }
 }
