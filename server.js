@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import Pusher from 'pusher';
 import Messages from './schemas/Message';
 import cors from 'cors';
-import { uniqWith, isEqual } from 'lodash';
+import { uniqWith, isEqual, findLastIndex } from 'lodash';
 
 const PORT = process.env.PORT || 9000;
 const app = express();
@@ -70,14 +70,18 @@ app.get(`/messages/:room/sync`, (req, res) => {
 
 app.get('/rooms', (req, res) => {
   Messages.find((err, data) => {
-    const lastMessage = data.pop();
-    const rooms = data.map((data) => ({
-      room: data.room,
-      lastMessage: lastMessage.message,
-    }));
-    err
-      ? res.status(500).send(err)
-      : res.status(200).send(uniqWith(rooms, isEqual));
+    const rooms = uniqWith(
+      data.map((item) => item.room),
+      isEqual
+    );
+    const roomsInfo = rooms.map((room) => {
+      const index = findLastIndex(data, (item) => item.room === room);
+      return {
+        room,
+        lastMessage: data[index].message,
+      };
+    });
+    err ? res.status(500).send(err) : res.status(200).send(roomsInfo);
   });
 });
 
